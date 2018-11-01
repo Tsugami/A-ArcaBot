@@ -20,7 +20,8 @@ fs.readdirSync(COMMAND_FOLDER)
                 const command_name = file.replace(/.js/g, '');
                 if (!client.commands[command_name]) {
                     let command = require(COMMAND_FOLDER + file);
-                    if (!command.hidden) client.commands[command_name] = command;
+                    if (command.hidden === true) console.log('not add', command_name)
+                        else client.commands[command_name] = command;
                 }
             }
         } catch (error) {

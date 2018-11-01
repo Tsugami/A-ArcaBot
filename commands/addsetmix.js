@@ -73,5 +73,5 @@ class AddSetMix {
 }
 
 module.exports = {
-    hidden: false
+    hidden: true
 }
