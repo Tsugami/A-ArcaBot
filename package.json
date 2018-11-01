@@ -1,6 +1,10 @@
 {
   "requires": true,
   "lockfileVersion": 1,
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha"
+  },
   "engines": {
     "node": "11.0.0"
   },
