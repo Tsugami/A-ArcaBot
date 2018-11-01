@@ -1,4 +1,4 @@
-const Color = require('Color');
+const Color = require('color');
 const {RichEmbed} = require('discord.js');
 
 module.exports = {
