@@ -37,7 +37,7 @@
       "resolved": "https://registry.npmjs.org/color-string/-/color-string-1.5.3.tgz",
       "version": "1.5.3"
     },
-    "discord.js": "^11.4.2",
+    "discord.js": "git+https://github.com/discordjs/discord.js.git#master",
     "fs": {
       "integrity": "sha1-invTcYa23d84E/I4WLV+yq9eQdQ=",
       "resolved": "https://registry.npmjs.org/fs/-/fs-0.0.1-security.tgz",
