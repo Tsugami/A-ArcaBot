@@ -33,7 +33,7 @@ module.exports = async function StateUpdate(oldState, newState) {
                     await gh.delete();
                 }
             }
-        }
+        }//a
     } catch(Erro) {
         console.error(Erro);
     }
