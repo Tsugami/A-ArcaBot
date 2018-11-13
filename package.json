@@ -38,6 +38,7 @@
       "version": "1.5.3"
     },
     "discord.js": "git+https://github.com/discordjs/discord.js.git#master",
+    "errors": "^0.3.0",
     "fs": {
       "integrity": "sha1-invTcYa23d84E/I4WLV+yq9eQdQ=",
       "resolved": "https://registry.npmjs.org/fs/-/fs-0.0.1-security.tgz",
