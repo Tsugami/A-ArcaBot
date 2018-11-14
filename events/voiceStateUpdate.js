@@ -30,6 +30,7 @@ module.exports = async function StateUpdate(oldState, newState) {
                 await oldState.channel.delete();
 
                 if (gh.children.array().length === 0 || gh.children.every(c => c.members.array().length === 0)) {
+                    await gh.children.each(channel => channel.delete());
                     await gh.delete();
                 }
             }
