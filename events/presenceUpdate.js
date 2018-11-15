@@ -1,19 +1,29 @@
-module.exports = function presenceUpdate(oldMember, newMember) {
-    const PPSSPP = '335581224972320768';
-    let Arca = this.guilds.get('323999635993657344');
+module.exports = async function presenceUpdate(oldUser, newUser) {
+    try {   
+        const PPSSPP = '335581224972320768';
+        let Arca = this.guilds.get(this.me.id);
+        let newPresence = newUser.presence.activity;
+        let oldPresence = oldUser.presence.activity;
+        if (oldUser.user.bot || newUser.user.bot) return;
 
-    if (oldMember.user.bot) return;
-
-
-    if (Arca) {
-        let userArca = Arca.members.get(oldMember.id);
-        if (userArca && newMember.presence.game && newMember.presence.game.name === 'PPSSPP') {
-            userArca.addRole(PPSSPP);
+        
+        if (Arca && Arca.members.get(newUser.id)) {
+            
+            let userArca = Arca.members.get(newUser.id);
+            
+            if (newPresence && newPresence.name === 'PPSSPP' && oldPresence && oldPresence.name === 'PPSSPP') {
+                if (!userArca.roles.get(PPSSPP)) {
+                    await userArca.roles.add(PPSSPP);
+                }
+            
+            } else {
+                if (userArca.roles.get(PPSSPP)) {
+                    await userArca.roles.remove(PPSSPP);
+                }
+            }
         }
-
-        if (userArca && (oldMember.presence.game && oldMember.presence.game.name == 'PPSSPP') && (!newMember.presence.game || (newMember.presence.game && newMember.presence.game.name !== 'PPSSPP'))) {
-            userArca.removeRole(PPSSPP);
-        }
+    } catch(error) {
+        console.error(error);
     }
 
 } 
