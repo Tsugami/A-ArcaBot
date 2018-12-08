@@ -21,8 +21,10 @@ class Arca extends Client {
                     const command_name = file.replace(/.js/g, '');
                     if (!this.commands.get(command_name)) {
                         let command = require(COMMAND_FOLDER + file);
-                        if (command.hidden === true) console.log('comando ', command_name, 'não foi adicionado');
-                            else this.commands.set(command_name, command);
+                        if (command.hidden === true) 
+                            console.log('comando ', command_name, 'não foi adicionado');
+                        else 
+                            this.commands.set(command_name, command);
                     }
                 }
             } catch (error) {
