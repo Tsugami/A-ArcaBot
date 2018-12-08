@@ -2,9 +2,9 @@ module.exports = async function Ready(){
     try {
         let ReadyLog = [
             "Estou online!",
-            `meu nome é ${this.user.username} servidor(es)`,
+            `meu nome é ${this.user.username}`,
             `atualmente em ${this.guilds.size}`,
-            `eles são:`,
+            `meus servidores:`,
             this.guilds.map((guild) => `${guild.name} com ${guild.members.size} membros`).join('\n')
         ];
 
