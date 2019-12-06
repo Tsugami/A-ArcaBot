@@ -1,96 +1,17 @@
 {
-  "requires": true,
-  "lockfileVersion": 1,
-  "scripts": {
-    "start": "node index.js",
-    "test": "mocha"
-  },
-  "engines": {
-    "node": "11.0.0"
-  },
-  "dependencies": {
-    "async-limiter": {
-      "integrity": "sha512-jp/uFnooOiO+L211eZOoSyzpOITMXx1rBITauYykG3BRYPu8h0UcxsPNB04RR5vo4Tyz3+ay17tR6JVf9qzYWg==",
-      "resolved": "https://registry.npmjs.org/async-limiter/-/async-limiter-1.0.0.tgz",
-      "version": "1.0.0"
-    },
-    "color": "^3.1.0",
-    "color-convert": {
-      "integrity": "sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==",
-      "requires": {
-        "color-name": "1.1.3"
-      },
-      "resolved": "https://registry.npmjs.org/color-convert/-/color-convert-1.9.3.tgz",
-      "version": "1.9.3"
-    },
-    "color-name": {
-      "integrity": "sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=",
-      "resolved": "https://registry.npmjs.org/color-name/-/color-name-1.1.3.tgz",
-      "version": "1.1.3"
-    },
-    "color-string": {
-      "integrity": "sha512-dC2C5qeWoYkxki5UAXapdjqO672AM4vZuPGRQfO8b5HKuKGBbKWpITyDYN7TOFKvRW7kOgAn3746clDBMDJyQw==",
-      "requires": {
-        "color-name": "^1.0.0",
-        "simple-swizzle": "^0.2.2"
-      },
-      "resolved": "https://registry.npmjs.org/color-string/-/color-string-1.5.3.tgz",
-      "version": "1.5.3"
-    },
-    "discord.js": "git+https://github.com/discordjs/discord.js.git#master",
-    "dotenv": "^6.1.0",
-    "errors": "^0.3.0",
-    "fs": {
-      "integrity": "sha1-invTcYa23d84E/I4WLV+yq9eQdQ=",
-      "resolved": "https://registry.npmjs.org/fs/-/fs-0.0.1-security.tgz",
-      "version": "0.0.1-security"
-    },
-    "is-arrayish": {
-      "integrity": "sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==",
-      "resolved": "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.3.2.tgz",
-      "version": "0.3.2"
-    },
-    "long": {
-      "integrity": "sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==",
-      "resolved": "https://registry.npmjs.org/long/-/long-4.0.0.tgz",
-      "version": "4.0.0"
-    },
-    "prism-media": {
-      "integrity": "sha512-c9KkNifSMU/iXT8FFTaBwBMr+rdVcN+H/uNv1o+CuFeTThNZNTOrQ+RgXA1yL/DeLk098duAeRPP3QNPNbhxYQ==",
-      "resolved": "https://registry.npmjs.org/prism-media/-/prism-media-0.0.3.tgz",
-      "version": "0.0.3"
-    },
-    "safe-buffer": {
-      "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==",
-      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
-      "version": "5.1.2"
-    },
-    "simple-swizzle": {
-      "integrity": "sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=",
-      "requires": {
-        "is-arrayish": "^0.3.1"
-      },
-      "resolved": "https://registry.npmjs.org/simple-swizzle/-/simple-swizzle-0.2.2.tgz",
-      "version": "0.2.2"
-    },
-    "snekfetch": {
-      "integrity": "sha512-NjxjITIj04Ffqid5lqr7XdgwM7X61c/Dns073Ly170bPQHLm6jkmelye/eglS++1nfTWktpP6Y2bFXjdPlQqdw==",
-      "resolved": "https://registry.npmjs.org/snekfetch/-/snekfetch-3.6.4.tgz",
-      "version": "3.6.4"
-    },
-    "tweetnacl": {
-      "integrity": "sha1-cT2LgY2kIGh0C/aDhtBHnmb8ins=",
-      "resolved": "https://registry.npmjs.org/tweetnacl/-/tweetnacl-1.0.0.tgz",
-      "version": "1.0.0"
-    },
-    "ws": {
-      "integrity": "sha512-ZGh/8kF9rrRNffkLFV4AzhvooEclrOH0xaugmqGsIfFgOE/pIz4fMc4Ef+5HSQqTEug2S9JZIWDR47duDSLfaA==",
-      "requires": {
-        "async-limiter": "~1.0.0",
-        "safe-buffer": "~5.1.0"
-      },
-      "resolved": "http://registry.npmjs.org/ws/-/ws-4.1.0.tgz",
-      "version": "4.1.0"
-    }
+  "name": "a-arca-bot",
+  "version": "2.0.0",
+  "description": "Private discord bot for my group (a-arca)",
+  "main": "index.js",
+  "author": "Tsugami <yslan3000@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
   }
 }
