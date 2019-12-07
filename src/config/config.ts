@@ -1,5 +1,6 @@
 export const guildId = process.env.GUILD_ID || '323999635993657344'
 export const voiceChannelCreatorId = process.env.VOICE_CHANNEL_CREATOR_ID || '511965999839576082'
+export const voiceCategoryId = process.env.VOICE_CATEGORY_ID || '652622719203934221'
 export const fullAwardRoleId = process.env.FULL_AWARD_ROLE_ID || '361277334118203402'
 export const playingRoleIds = {
   ppsspp: process.env.PPSSPP_PLAYING_OLE_ID || '335581224972320768',

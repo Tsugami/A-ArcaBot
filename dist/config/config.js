@@ -1,5 +1,6 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); const guildId = process.env.GUILD_ID || '323999635993657344'; exports.guildId = guildId
  const voiceChannelCreatorId = process.env.VOICE_CHANNEL_CREATOR_ID || '511965999839576082'; exports.voiceChannelCreatorId = voiceChannelCreatorId
+ const voiceCategoryId = process.env.VOICE_CATEGORY_ID || '652622719203934221'; exports.voiceCategoryId = voiceCategoryId
  const fullAwardRoleId = process.env.FULL_AWARD_ROLE_ID || '361277334118203402'; exports.fullAwardRoleId = fullAwardRoleId
  const playingRoleIds = {
   ppsspp: process.env.PPSSPP_PLAYING_OLE_ID || '335581224972320768',
