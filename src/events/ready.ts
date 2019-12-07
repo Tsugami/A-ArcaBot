@@ -1,14 +1,18 @@
-import EventBase from './base'
-import { Client } from 'discord.js'
 import { guildId } from '../config/config'
 import { manageMonsterHunterRoles } from '../utils/Utils'
+import { Listener } from 'discord-akairo'
 
-export default class ReadyEvent implements EventBase {
-  name = 'ready'
-  emitter: 'once' = 'once'
+export default class ReadyEvent extends Listener {
+  constructor () {
+    super('ready', {
+      emitter: 'client',
+      eventName: 'ready'
+    })
+  }
 
-  async run (this: Client): Promise<void> {
-    this.guilds.get(guildId)
+  async exec (): Promise<void> {
+    console.log('online!')
+    this.client.guilds.get(guildId)
       .members.forEach((member) => {
         manageMonsterHunterRoles(member, 'add')
       })

@@ -403,6 +403,11 @@ diff@^4.0.1:
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.1.tgz#0c667cb467ebbb5cea7f14f135cc2dba7780a8ff"
   integrity sha512-s2+XdvhPCOF01LRQBC8hf4vhbVmI2CGS5aZnxLJlT5FtdhPCDFq80q++zK2KlrVorVDdL5BOGZ/VfLrVtYNF+Q==
 
+discord-akairo@^7.5.6:
+  version "7.5.6"
+  resolved "https://registry.yarnpkg.com/discord-akairo/-/discord-akairo-7.5.6.tgz#3508262106c91be135a3cbcece17f09727fa3934"
+  integrity sha512-u/hmpCs6IN2XJAm1Y5DUEawJc+ybWCzf4QPsOKsbbwWx2pHBCSGABazsstSEdVAhE3ZdwP/GAbgyKDR0ceQqsw==
+
 discord.js@^11.5.1:
   version "11.5.1"
   resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-11.5.1.tgz#910fb9f6410328581093e044cafb661783a4d9e8"
