@@ -20,7 +20,7 @@ var _config = require('../config/config');
   const fn = (roleId) => manageRole(member, roleId, option)
   switch (member.presence.game.applicationID) {
     case _config.appIds.mhw:
-      await fn(_config.mhRoleIds.mhw)
+      if (option === 'add') await fn(_config.mhRoleIds.mhw)
       await fn(_config.playingRoleIds.mhw)
       break
 
@@ -29,8 +29,8 @@ var _config = require('../config/config');
       if (!oldState) return
       const mh = Object.entries(_config.states).find(val => val[1].includes(oldState))
       if (mh) {
+        if (option === 'add') fn(_config.mhRoleIds[mh[0]])
         fn(_config.playingRoleIds[mh[0]])
-        fn(_config.mhRoleIds[mh[0]])
       } else {
         fn(_config.playingRoleIds.ppsspp)
       }

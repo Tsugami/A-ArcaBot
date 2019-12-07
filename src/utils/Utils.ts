@@ -20,7 +20,7 @@ export async function manageMonsterHunterRoles (member: GuildMember, option: 'ad
   const fn = (roleId: string) => manageRole(member, roleId, option)
   switch (member.presence.game.applicationID) {
     case appIds.mhw:
-      await fn(mhRoleIds.mhw)
+      if (option === 'add') await fn(mhRoleIds.mhw)
       await fn(playingRoleIds.mhw)
       break
 
@@ -29,8 +29,8 @@ export async function manageMonsterHunterRoles (member: GuildMember, option: 'ad
       if (!oldState) return
       const mh = Object.entries(states).find(val => val[1].includes(oldState))
       if (mh) {
+        if (option === 'add') fn(mhRoleIds[mh[0]])
         fn(playingRoleIds[mh[0]])
-        fn(mhRoleIds[mh[0]])
       } else {
         fn(playingRoleIds.ppsspp)
       }
