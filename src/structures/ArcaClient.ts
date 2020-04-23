@@ -1,53 +1,31 @@
-import { Client, GuildMember } from 'discord.js'
-import { Games, ApplicationIDs, PlayingRoleIDs, GameRoleIDs, GuildId, States, Names } from '../constants'
+import { Client, Guild } from 'discord.js'
+import { PlayingRoleIDs, GameRoleIDs, GuildId, fullAwardRoleId } from '../constants'
+import { createRainbow } from '../utils/rainbow'
+import RoleUtil from '../utils/role'
 
 export default class ArcaClient extends Client {
+  rainbow: string[] = createRainbow(100)
+  currentColorIndex = 0;
+
   constructor () {
     super({
       fetchAllMembers: true
     })
     this.once('ready', () => {
+      const guild = this.guilds.cache.get(GuildId)
+
       console.log('Acordei :)')
-      this.setInterval(() => this.handleGameRole(), 5000)
+
+      this.setInterval(() => this.handleGameRole(guild), 5000)
+      this.setInterval(() => this.handleRainbow(guild), 300000)
     })
   }
 
-  findGameByPlaying (member: GuildMember): Games | null {
-    for (const { applicationID, state, name } of member.presence.activities) {
-      if (ApplicationIDs[applicationID]) return ApplicationIDs[applicationID]
-      if (States[state]) return States[state]
-      if (Names[name]) return Names[name]
-    }
-  }
-
-  findGameByPlayingRole (member: GuildMember, ignoreGame?: Games): Games {
-    let result: Games | null = null
-    const entries = Object.entries(PlayingRoleIDs)
-    for (const { id } of member.roles.cache.values()) {
-      const game = entries.find(e => e[1] === id)
-      if (game) {
-        if (game[0] === ignoreGame) continue
-        result = game[0] as Games
-        break
-      }
-    }
-    return result
-  }
-
-  isPlayingGame (member: GuildMember, game: Games) {
-    return member.presence.activities.some(act =>
-      ApplicationIDs[act.applicationID] === game ||
-      States[act.state] === game ||
-      Names[act.name] === game
-    )
-  }
-
-  handleGameRole () {
-    const guild = this.guilds.cache.get(GuildId)
+  handleGameRole (guild: Guild) {
     guild.members.cache.forEach(member => {
       if (member.user.bot) return
 
-      const playingGame = this.findGameByPlaying(member)
+      const playingGame = RoleUtil.findGameByPlaying(member)
 
       if (playingGame) {
         const gameRoleId = GameRoleIDs[playingGame]
@@ -62,10 +40,21 @@ export default class ArcaClient extends Client {
         }
       }
 
-      const playingRole = this.findGameByPlayingRole(member, playingGame)
-      if (playingRole && !this.isPlayingGame(member, playingRole)) {
+      const playingRole = RoleUtil.findGameByPlayingRole(member, playingGame)
+      if (playingRole && !RoleUtil.isPlayingGame(member, playingRole)) {
         member.roles.remove(PlayingRoleIDs[playingRole])
       }
     })
+  }
+
+  handleRainbow (guild: Guild) {
+    this.currentColorIndex = this.getNextColorIndex()
+    guild.roles.cache.get(fullAwardRoleId).edit({ color: this.rainbow[this.currentColorIndex] })
+  }
+
+  getNextColorIndex () {
+    const next = this.currentColorIndex + 1
+    if (next === this.rainbow.length - 1) return 0
+    return next
   }
 }

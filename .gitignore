@@ -2,7 +2,5 @@
 node_modules/
 # environment variables
 .env
-# old files
-old/
 # logs
-yarn.lock
+yarn-error.log
