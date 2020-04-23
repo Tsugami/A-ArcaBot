@@ -1,9 +1,6 @@
 import 'dotenv/config'
-import { AkairoClient } from 'discord-akairo'
-import path from 'path'
+import ArcaClient from './structures/ArcaClient'
 
-const bot = new AkairoClient({
-  listenerDirectory: path.join(__dirname, './events')
-}, {})
+const client = new ArcaClient()
 
-bot.login(process.env.TOKEN)
+client.login(process.env.TOKEN)
