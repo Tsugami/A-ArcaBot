@@ -48,7 +48,6 @@ export default class ArcaClient extends Client {
   }
 
   handleRainbow (guild: Guild) {
-    console.log(this.rainbow.color)
     guild.roles.cache.get(fullAwardRoleId).edit({ color: this.rainbow.color })
   }
 }
