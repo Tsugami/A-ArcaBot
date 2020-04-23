@@ -9,7 +9,8 @@ export default class ArcaClient extends Client {
 
   constructor () {
     super({
-      fetchAllMembers: true
+      fetchAllMembers: true,
+      messageCacheMaxSize: 0
     })
     this.once('ready', () => {
       const guild = this.guilds.cache.get(GuildId)
