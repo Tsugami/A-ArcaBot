@@ -15,7 +15,10 @@ export default class ArcaClient extends Client {
     this.once('ready', () => {
       const guild = this.guilds.cache.get(GuildId)
 
-      if (!guild) process.exit(0)
+      if (!guild) {
+        console.error('BOT IS NOT ON SERVER')
+        process.exit(0)
+      }
 
       console.log('Acordei :)')
 
