@@ -1,10 +1,10 @@
 import { Client, Guild } from 'discord.js'
 import { PlayingRoleIDs, GameRoleIDs, GuildId, fullAwardRoleId } from '../constants'
-import { createRainbow } from '../utils/rainbow'
+import Rainbow from '../utils/rainbow'
 import RoleUtil from '../utils/role'
 
 export default class ArcaClient extends Client {
-  rainbow: string[] = createRainbow(100)
+  rainbow = new Rainbow(100)
   currentColorIndex = 0;
 
   constructor () {
@@ -48,13 +48,7 @@ export default class ArcaClient extends Client {
   }
 
   handleRainbow (guild: Guild) {
-    this.currentColorIndex = this.getNextColorIndex()
-    guild.roles.cache.get(fullAwardRoleId).edit({ color: this.rainbow[this.currentColorIndex] })
-  }
-
-  getNextColorIndex () {
-    const next = this.currentColorIndex + 1
-    if (next === this.rainbow.length - 1) return 0
-    return next
+    console.log(this.rainbow.color)
+    guild.roles.cache.get(fullAwardRoleId).edit({ color: this.rainbow.color })
   }
 }
