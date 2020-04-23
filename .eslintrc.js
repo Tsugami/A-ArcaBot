@@ -20,6 +20,7 @@ module.exports = {
     rules: {
         '@typescript-eslint/no-explicit-any': 'off',
         "indent": ["error", 2, { "SwitchCase": 1 }],
-        "@typescript-eslint/explicit-function-return-type": "off"
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "no-unused-expressions": "off"
     }
   }

@@ -14,6 +14,8 @@ export default class ArcaClient extends Client {
     this.once('ready', () => {
       const guild = this.guilds.cache.get(GuildId)
 
+      if (!guild) process.exit(0)
+
       console.log('Acordei :)')
 
       this.setInterval(() => this.handleGameRole(guild), 5000)
@@ -48,6 +50,6 @@ export default class ArcaClient extends Client {
   }
 
   handleRainbow (guild: Guild) {
-    guild.roles.cache.get(fullAwardRoleId).edit({ color: this.rainbow.color })
+    guild.roles.cache.get(fullAwardRoleId)?.edit({ color: this.rainbow.color })
   }
 }

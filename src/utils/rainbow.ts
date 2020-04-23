@@ -3,7 +3,6 @@ export default class Rainbow {
   private currentIndex = 0
 
   constructor (public size = 12) {
-    this.size = size
     this.build()
   }
 
@@ -30,8 +29,8 @@ export default class Rainbow {
     }
   }
 
-  sinToHex (i, phase) {
-    const sin = Math.sin(Math.PI / this.size * 2 * i + phase)
+  sinToHex (index: number, phase: number) {
+    const sin = Math.sin(Math.PI / this.size * 2 * index + phase)
     const int = Math.floor(sin * 127) + 128
     const hex = int.toString(16)
 

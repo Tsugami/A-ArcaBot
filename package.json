@@ -5,14 +5,15 @@
   "author": "Tsugami <yslan3000@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon --watch '*.ts' --exec 'ts-node' src/index.ts",
+    "start": "node dist/index.js",
     "prebuild": "rimraf dist",
-    "build": "sucrase ./src -d ./dist --transforms typescript,imports",
-    "start": "node ./dist/index.js"
+    "build": "tsc --build tsconfig.json"
   },
   "private": true,
   "devDependencies": {
     "@types/node": "^12.12.14",
+    "@types/ws": "^7.2.4",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "eslint": "^6.7.2",
@@ -22,7 +23,6 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^2.0.1",
-    "sucrase": "^3.10.1",
     "ts-node": "^8.5.4",
     "typescript": "^3.8.3",
     "typescript-eslint": "^0.0.1-alpha.0"
