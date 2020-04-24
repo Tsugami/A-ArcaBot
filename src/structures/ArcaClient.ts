@@ -10,7 +10,10 @@ export default class ArcaClient extends Client {
   constructor () {
     super({
       fetchAllMembers: true,
-      messageCacheMaxSize: 0
+      messageCacheMaxSize: 0,
+      presence: {
+        activity: { name: 'source: https://github.com/Tsugami/A-ArcaBot' }
+      }
     })
     this.once('ready', () => {
       const guild = this.guilds.cache.get(GuildId)
