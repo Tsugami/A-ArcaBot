@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "discord.js": "^12.2.0",
-    "dotenv": "^8.2.0",
-    "minimist": "^1.2.5"
+    "dotenv": "^8.2.0"
   }
 }
