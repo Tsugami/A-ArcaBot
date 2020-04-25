@@ -43,11 +43,12 @@ export default class ArcaClient extends Client {
         const gameRoleId = GameRoleIDs[playingGame]
         const playingRoleId = PlayingRoleIDs[playingGame]
 
+        if (isStreaming && !hasStreamingRole) {
+          member.roles.add(StreamingRoleId)
+        }
+
         if (gameRoleId && !member.roles.cache.has(gameRoleId)) {
           member.roles.add(gameRoleId)
-          if (isStreaming && !hasStreamingRole) {
-            member.roles.add(StreamingRoleId)
-          }
         }
 
         if (playingRoleId && !member.roles.cache.has(playingRoleId)) {
