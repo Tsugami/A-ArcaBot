@@ -1,6 +1,6 @@
 export const GuildId = '323999635993657344'
 export const fullAwardRoleId = '361277334118203402'
-
+export const StreamingRoleId = '338493040786145280'
 export type Games =
   'PPSSPP' |
   'MHFU' |
@@ -30,6 +30,7 @@ export const ApplicationIDs: Record<string, Games> = {
 
 export const States: Record<string, Games> = {
   'MONSTER HUNTER FREEDOM UNITE™': 'MHFU',
+  'Monster Hunter Freedom Unite': 'MHFU',
   'MONSTER HUNTER PORTABLE 3rd HD Ver.': 'MHP3RD'
 }
 
