@@ -5,7 +5,7 @@
   "author": "Tsugami <yslan3000@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --watch '*.ts' --exec 'ts-node' src/index.ts",
+    "dev": "nodemon src/index.ts",
     "start": "node dist/index.js",
     "prebuild": "rimraf dist",
     "build": "tsc --build tsconfig.json"
@@ -25,10 +25,16 @@
     "nodemon": "^2.0.1",
     "ts-node": "^8.5.4",
     "typescript": "^3.8.3",
-    "typescript-eslint": "^0.0.1-alpha.0"
+    "typescript-eslint": "^0.0.1-alpha.0",
+    "dotenv": "^8.2.0"
   },
   "dependencies": {
-    "discord.js": "^12.2.0",
-    "dotenv": "^8.2.0"
+    "discord.js": "^12.2.0"
+  },
+  "nodemonConfig": {
+    "watch": "src/**/*.ts",
+    "execMap": {
+      "ts": "ts-node -r dotenv/config"
+    }
   }
 }
