@@ -11,6 +11,9 @@ export default class ArcaClient extends Client {
     super({
       fetchAllMembers: true,
       messageCacheMaxSize: 0,
+      ws: {
+        intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_PRESENCES']
+      },
       presence: {
         activity: { name: 'source: https://github.com/Tsugami/A-ArcaBot' }
       }

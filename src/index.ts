@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import ArcaClient from './structures/ArcaClient'
 
 const client = new ArcaClient()
