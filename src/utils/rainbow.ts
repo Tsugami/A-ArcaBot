@@ -1,36 +1,34 @@
 export default class Rainbow {
-  private rainbow = new Array(this.size)
   private currentIndex = 0
 
   constructor (public size = 12) {
-    this.build()
+    this.size = size
   }
 
   get color () {
-    const color = this.rainbow[this.currentIndex]
+    const color = Rainbow.getHexColorByIndex(this.currentIndex, this.size)
     this.next()
     return color
   }
 
   next () {
-    this.currentIndex += 1
-    if (this.currentIndex === this.rainbow.length - 1) {
+    if (this.currentIndex === this.size) {
       this.currentIndex = 0
+    } else {
+      this.currentIndex += 1
     }
   }
 
-  private build () {
-    for (let i = 0; i < this.size; i++) {
-      const red = this.sinToHex(i, 0 * Math.PI * 2 / 3) // 0   deg
-      const blue = this.sinToHex(i, 1 * Math.PI * 2 / 3) // 120 deg
-      const green = this.sinToHex(i, 2 * Math.PI * 2 / 3) // 240 deg
+  static getHexColorByIndex (index: number, size: number) {
+    const red = Rainbow.sinToHex(index, size, 0 * Math.PI * 2 / 3) // 0   deg
+    const blue = Rainbow.sinToHex(index, size, 1 * Math.PI * 2 / 3) // 120 deg
+    const green = Rainbow.sinToHex(index, size, 2 * Math.PI * 2 / 3) // 240 deg
 
-      this.rainbow[i] = '#' + red + green + blue
-    }
+    return '#' + red + green + blue
   }
 
-  sinToHex (index: number, phase: number) {
-    const sin = Math.sin(Math.PI / this.size * 2 * index + phase)
+  static sinToHex (index: number, size: number, phase: number) {
+    const sin = Math.sin(Math.PI / size * 2 * index + phase)
     const int = Math.floor(sin * 127) + 128
     const hex = int.toString(16)
 
