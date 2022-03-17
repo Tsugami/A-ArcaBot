@@ -1,5 +1,5 @@
-import ArcaClient from './structures/ArcaClient'
+import ArcaClient from './structures/ArcaClient';
 
-const client = new ArcaClient()
+const client = new ArcaClient();
 
-client.login(process.env.TOKEN)
+client.login(process.env.TOKEN);

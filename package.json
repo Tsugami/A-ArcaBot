@@ -8,25 +8,24 @@
     "dev": "nodemon src/index.ts",
     "start": "node dist/index.js",
     "prebuild": "rimraf dist",
-    "build": "tsc --build tsconfig.json"
+    "build": "tsc --build tsconfig.json",
+    "lint": "eslint --ext .ts --fix ."
   },
   "private": true,
   "devDependencies": {
     "@types/node": "^12.12.14",
     "@types/ws": "^7.2.4",
-    "@typescript-eslint/eslint-plugin": "^2.10.0",
-    "@typescript-eslint/parser": "^2.10.0",
-    "eslint": "^6.7.2",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-prettier-config": "^1.0.1",
     "nodemon": "^2.0.1",
+    "prettier": "^2.6.0",
     "ts-node": "^8.5.4",
-    "typescript": "^3.8.3",
-    "typescript-eslint": "^0.0.1-alpha.0",
-    "dotenv": "^8.2.0"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "discord.js": "^12.2.0"

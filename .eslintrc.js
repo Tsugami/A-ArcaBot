@@ -1,26 +1,24 @@
 module.exports = {
-    parser: '@typescript-eslint/parser',
-    env: {
-      es6: true,
-      node: true
-    },
-    plugins: ['@typescript-eslint'],
-    extends: [
-      'plugin:@typescript-eslint/recommended',
-      'standard'
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  env: {
+    es2021: true,
+    node: true,
+    jest: true,
+  },
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
+  rules: {
+    'prettier/prettier': 'error',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '_',
+      },
     ],
-    globals: {
-      Atomics: 'readonly',
-      SharedArrayBuffer: 'readonly'
-    },
-    parserOptions: {
-      ecmaVersion: 2018,
-      sourceType: 'module'
-    },
-    rules: {
-        '@typescript-eslint/no-explicit-any': 'off',
-        "indent": ["error", 2, { "SwitchCase": 1 }],
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "no-unused-expressions": "off"
-    }
-  }
+  },
+  plugins: ['@typescript-eslint', 'prettier'],
+};
