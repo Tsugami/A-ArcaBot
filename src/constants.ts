@@ -1,7 +1,7 @@
 export const GuildId = '323999635993657344';
 export const fullAwardRoleId = '361277334118203402';
-export const StreamingRoleId = '338493040786145280';
-export type Games = 'PPSSPP' | 'MHFU' | 'MHP3RD' | 'MHW' | 'MHO' | 'MHGU';
+export const STREAMING_ROLE_ID = '338493040786145280';
+export type Games = 'PPSSPP' | 'MHFU' | 'MHP3RD' | 'MHW' | 'MHO' | 'MHGU' | 'MHR';
 
 export const PlayingRoleIDs: Record<Games, string> = {
   PPSSPP: '335581224972320768',
@@ -10,6 +10,7 @@ export const PlayingRoleIDs: Record<Games, string> = {
   MHW: '392797213752950784',
   MHO: '340194860529221633',
   MHGU: '805245051961212939',
+  MHR: '954190078652071988',
 };
 
 export const GameRoleIDs: Partial<Record<Games, string>> = {
@@ -17,6 +18,8 @@ export const GameRoleIDs: Partial<Record<Games, string>> = {
   MHP3RD: '339206693135319041',
   MHW: '339206451723501570',
   MHO: '339206697987866627',
+  MHGU: '954189853074006067',
+  MHR: '954190720795832400',
 };
 
 export const ApplicationIDs: Record<string, Games> = {
@@ -34,4 +37,5 @@ export const States: Record<string, Games> = {
 
 export const Names: Record<string, Games> = {
   'MONSTER HUNTER: WORLD': 'MHW',
+  'MONSTER HUNTER RISE': 'MHR',
 };
