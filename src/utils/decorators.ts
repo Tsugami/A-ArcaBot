@@ -16,8 +16,8 @@ export const timeout = (delay: number): DecoratorFunction<void, Client> => {
   return function (_target, _propertykey, descriptor) {
     const originalValue = descriptor.value;
 
-    descriptor.value = function (this: Client, ...args: any[]) {
-      return this.setInterval(() => originalValue.call(this, ...args), delay);
+    descriptor.value = function (this: unknown, ...args: unknown[]) {
+      return setInterval(() => originalValue.call(this, ...args), delay);
     };
   };
 };

@@ -1,15 +1,19 @@
-import type { Game, GuildMember } from './types';
+import type { Game, APIUser, Config, GatewayActivity } from './types';
 
-import { config } from './config';
+import { ActivityType } from './types';
 import { logger } from './utils/logger';
 import { GameConfig } from './config/GameConfig';
+import { RoleManagar } from './lib/RoleManagar';
+import { getUserDisplayName } from './utils/discord';
 
 export class GamePlaying {
+  constructor(public roleManagar: RoleManagar, public config: Config) {}
+
   /**
    * Returns the game that the member is playing, if the game is not found, returns undefined. It only works with games-on config file.
    */
-  static getGame(member: GuildMember): Game | undefined {
-    for (const activity of member.presence.activities) {
+  static getGame(activities: GatewayActivity[]): Game | undefined {
+    for (const activity of activities) {
       const game = GameConfig.findGameByActivity(activity);
       if (game) return game;
     }
@@ -18,38 +22,38 @@ export class GamePlaying {
   /**
    * Check if the member is streaming on twitch
    */
-  static isStreaming(member: GuildMember): boolean {
-    return member.presence.activities.some(({ type }) => type === 'STREAMING');
+  static isStreaming(activities: GatewayActivity[]): boolean {
+    return !!activities.some(({ type }) => type === ActivityType.Streaming);
   }
 
   /**
    * Add streaming role if user is streaming, if user is not streaming and has the role, remove role
    */
-  static async toggleStreamingRole(member: GuildMember): Promise<void> {
-    const hasStreamingRole = member.roles.cache.has(config.streamingRoleId);
-    const isStreaming = GamePlaying.isStreaming(member);
+  async toggleStreamingRole(user: APIUser, activities: GatewayActivity[]): Promise<void> {
+    const hasStreamingRole = this.roleManagar.hasRole(user.id, this.config.streamingRoleId);
+    const isStreaming = GamePlaying.isStreaming(activities);
 
     if (isStreaming && !hasStreamingRole) {
-      logger.debug('Adding streaming role for %s', member.user.tag);
-      await member.roles.add(config.streamingRoleId);
+      logger.debug('Adding streaming role for %s', getUserDisplayName(user));
+      await this.roleManagar.addRole(user.id, this.config.streamingRoleId);
     } else if (!isStreaming && hasStreamingRole) {
-      logger.debug('Removing streaming role for %s', member.user.tag);
-      await member.roles.remove(config.streamingRoleId);
+      logger.debug('Removing streaming role for %s', getUserDisplayName(user));
+      await this.roleManagar.removeRole(user.id, this.config.streamingRoleId);
     }
   }
 
   /**
    * if user is not playing the game and has the playing role, remove role.
    */
-  static async handleRemoveGameRole(member: GuildMember): Promise<void> {
-    const playingGame = GamePlaying.getGame(member);
+  async handleRemoveGameRole(user: APIUser, activities: GatewayActivity[]): Promise<void> {
+    const playingGame = GamePlaying.getGame(activities);
 
     for (const playingRoleID of GameConfig.getPlayingRoleIds()) {
       if (playingRoleID === playingGame?.playingRoleId) continue;
 
-      if (member.roles.cache.has(playingRoleID)) {
-        logger.debug('Removing %s playing role for %s', playingGame, member.user.tag);
-        await member.roles.remove(playingRoleID);
+      if (this.roleManagar.hasRole(user.id, playingRoleID)) {
+        logger.debug('Removing %s playing role for %s', playingGame, getUserDisplayName(user));
+        await this.roleManagar.removeRole(user.id, playingRoleID);
       }
     }
   }
@@ -57,24 +61,24 @@ export class GamePlaying {
   /**
    * Add playing role if user is playing. Also adds the game role if the user doesn't have it.
    */
-  static async handleGameRole(member: GuildMember): Promise<void> {
-    const playingGame = GamePlaying.getGame(member);
+  async handleGameRole(user: APIUser, activities: GatewayActivity[]): Promise<void> {
+    const playingGame = GamePlaying.getGame(activities);
 
     if (!playingGame) return;
 
     const hasGameRole =
-      !!playingGame?.gameRoleId && member.roles.cache.has(playingGame?.gameRoleId);
+      !!playingGame?.gameRoleId && this.roleManagar.hasRole(user.id, playingGame?.gameRoleId);
 
     if (!!playingGame?.gameRoleId && !hasGameRole) {
-      logger.debug('Adding %s game role for %s', playingGame, member.user.tag);
-      member.roles.add(playingGame.gameRoleId);
+      logger.debug('Adding %s game role for %s', playingGame, getUserDisplayName(user));
+      this.roleManagar.addRole(user.id, playingGame.gameRoleId);
     }
 
-    const hasPlayingRole = member.roles.cache.has(playingGame.playingRoleId);
+    const hasPlayingRole = this.roleManagar.hasRole(user.id, playingGame.playingRoleId);
 
     if (playingGame && !hasPlayingRole) {
-      logger.debug('Adding %s playing role for %s', playingGame, member.user.tag);
-      member.roles.add(playingGame.playingRoleId);
+      logger.debug('Adding %s playing role for %s', playingGame, getUserDisplayName(user));
+      this.roleManagar.addRole(user.id, playingGame.playingRoleId);
     }
   }
 }

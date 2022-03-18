@@ -1,27 +1,28 @@
-import type { Guild, GuildMember } from 'discord.js';
+import type { ColorResolvable, Guild, GuildMember } from 'discord.js';
 
-import { Client } from 'discord.js';
+import { Client, Intents } from 'discord.js';
 
 import { config } from './config';
 import { logger, timeout } from './utils/decorators';
 
 import Rainbow from './utils/rainbow';
 import { GamePlaying } from './GamePlaying';
+import { RoleManagar } from './lib/RoleManagar';
+import { normalizeActivity, normalizeUser } from './utils/parsers';
 
 export default class ArcaClient extends Client {
   private rainbow = new Rainbow(100);
+  public roleManager = new RoleManagar(this, config);
+  public gamePlaying = new GamePlaying(this.roleManager, config);
 
   constructor() {
     super({
-      fetchAllMembers: true,
-      messageCacheMaxSize: 0,
-      ws: {
-        intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_PRESENCES'],
-      },
+      intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_PRESENCES],
       presence: {
-        activity: { name: `source: ${config.source}` },
+        activities: [{ name: config.botActivity }],
       },
     });
+
     this.on('ready', this.handleReady);
   }
 
@@ -30,7 +31,7 @@ export default class ArcaClient extends Client {
     const guild = this.guilds.cache.get(config.guildId);
 
     if (!guild) {
-      console.error('BOT IS NOT ON SERVER');
+      console.error('BOT NOT FOUND IN GUILD');
       process.exit(0);
     }
 
@@ -39,20 +40,27 @@ export default class ArcaClient extends Client {
   }
 
   private runGamePlayingHandlers(member: GuildMember) {
-    GamePlaying.handleGameRole(member);
-    GamePlaying.handleRemoveGameRole(member);
-    GamePlaying.toggleStreamingRole(member);
+    if (!member.user || member.user.bot) return;
+
+    const user = normalizeUser(member.user);
+    const activities = member.presence?.activities.map(normalizeActivity) ?? [];
+
+    this.gamePlaying.handleGameRole(user, activities);
+    this.gamePlaying.handleRemoveGameRole(user, activities);
+    this.gamePlaying.toggleStreamingRole(user, activities);
   }
 
   @timeout(5000)
   private handleGameRole(guild: Guild) {
     return guild.members.cache
       .filter((member) => !member.user.bot)
-      .forEach(this.runGamePlayingHandlers);
+      .forEach((member) => this.runGamePlayingHandlers(member));
   }
 
   @timeout(30000)
   private handleRainbow(guild: Guild) {
-    return guild.roles.cache.get(config.fullAwardRoleId)?.edit({ color: this.rainbow.color });
+    return guild.roles.cache
+      .get(config.fullAwardRoleId)
+      ?.edit({ color: this.rainbow.color as ColorResolvable });
   }
 }

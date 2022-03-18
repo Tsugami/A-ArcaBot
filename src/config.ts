@@ -1,10 +1,11 @@
 import type { Config } from 'types';
 
 export const config: Config = {
+  clientId: '507560105815048212',
   guildId: '323999635993657344',
   fullAwardRoleId: '330101098680197120',
   streamingRoleId: '338493040786145280',
-  source: 'https://github.com/Tsugami/A-ArcaBot',
+  botActivity: 'source: https://github.com/Tsugami/A-ArcaBot',
   games: {
     MHFU: {
       name: 'MHFU',
