@@ -1,8 +1,12 @@
-import { Client, Guild, GuildMember } from 'discord.js';
-import { GuildId, fullAwardRoleId } from '../constants';
-import Rainbow from '../utils/rainbow';
-import { logger, timeout } from '../utils/decorators';
-import { GamePlaying } from '../GamePlaying';
+import type { Guild, GuildMember } from 'discord.js';
+
+import { Client } from 'discord.js';
+
+import { config } from './config';
+import { logger, timeout } from './utils/decorators';
+
+import Rainbow from './utils/rainbow';
+import { GamePlaying } from './GamePlaying';
 
 export default class ArcaClient extends Client {
   private rainbow = new Rainbow(100);
@@ -15,15 +19,15 @@ export default class ArcaClient extends Client {
         intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_PRESENCES'],
       },
       presence: {
-        activity: { name: 'source: https://github.com/Tsugami/A-ArcaBot' },
+        activity: { name: `source: ${config.source}` },
       },
     });
-    this.on('ready', this.onReady);
+    this.on('ready', this.handleReady);
   }
 
   @logger('Acordei :)')
-  private onReady() {
-    const guild = this.guilds.cache.get(GuildId);
+  private handleReady() {
+    const guild = this.guilds.cache.get(config.guildId);
 
     if (!guild) {
       console.error('BOT IS NOT ON SERVER');
@@ -34,7 +38,7 @@ export default class ArcaClient extends Client {
     this.handleRainbow(guild);
   }
 
-  private ensureGameRole(member: GuildMember) {
+  private runGamePlayingHandlers(member: GuildMember) {
     GamePlaying.handleGameRole(member);
     GamePlaying.handleRemoveGameRole(member);
     GamePlaying.toggleStreamingRole(member);
@@ -42,11 +46,13 @@ export default class ArcaClient extends Client {
 
   @timeout(5000)
   private handleGameRole(guild: Guild) {
-    return guild.members.cache.filter((member) => !member.user.bot).forEach(this.ensureGameRole);
+    return guild.members.cache
+      .filter((member) => !member.user.bot)
+      .forEach(this.runGamePlayingHandlers);
   }
 
   @timeout(30000)
   private handleRainbow(guild: Guild) {
-    return guild.roles.cache.get(fullAwardRoleId)?.edit({ color: this.rainbow.color });
+    return guild.roles.cache.get(config.fullAwardRoleId)?.edit({ color: this.rainbow.color });
   }
 }

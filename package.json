@@ -33,6 +33,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "discord-api-types": "^0.29.0",
     "discord.js": "^12.2.0",
     "reflect-metadata": "^0.1.13"
   },
@@ -52,7 +53,9 @@
     ]
   },
   "commitlint": {
-    "extends": ["@commitlint/config-conventional"]
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "engines": {
     "yarn": ">=1.22.0",

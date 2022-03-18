@@ -1,4 +1,4 @@
-import ArcaClient from './structures/ArcaClient';
+import ArcaClient from './ArcaClient';
 
 const client = new ArcaClient();
 
