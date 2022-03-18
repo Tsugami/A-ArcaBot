@@ -9,10 +9,13 @@
     "start": "node dist/index.js",
     "prebuild": "rimraf dist",
     "build": "tsc --build tsconfig.json",
-    "lint": "eslint --ext .ts --fix ."
+    "lint": "eslint --ext .ts --fix .",
+    "prepare": "husky install"
   },
   "private": true,
   "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
     "@types/node": "^12.12.14",
     "@types/ws": "^7.2.4",
     "@typescript-eslint/eslint-plugin": "^5.15.0",
@@ -22,6 +25,8 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-prettier-config": "^1.0.1",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "nodemon": "^2.0.1",
     "prettier": "^2.6.0",
     "ts-node": "^8.5.4",
@@ -37,8 +42,20 @@
       "ts": "ts-node -r dotenv/config"
     }
   },
+  "lint-staged": {
+    "*{.jsx,.js,.ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.yml": [
+      "prettier --write"
+    ]
+  },
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"]
+  },
   "engines": {
     "yarn": ">=1.22.0",
     "node": ">=16.12.0"
-  } 
+  }
 }

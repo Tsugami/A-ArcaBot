@@ -1,13 +1,6 @@
 import { Client, Guild, GuildMember } from 'discord.js';
-import {
-  PlayingRoleIDs,
-  GameRoleIDs,
-  GuildId,
-  fullAwardRoleId,
-  STREAMING_ROLE_ID,
-} from '../constants';
+import { GuildId, fullAwardRoleId } from '../constants';
 import Rainbow from '../utils/rainbow';
-import RoleUtil from '../utils/role';
 import { logger, timeout } from '../utils/decorators';
 import { GamePlaying } from '../GamePlaying';
 
