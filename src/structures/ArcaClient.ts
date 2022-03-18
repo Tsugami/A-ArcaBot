@@ -4,11 +4,12 @@ import {
   GameRoleIDs,
   GuildId,
   fullAwardRoleId,
-  StreamingRoleId,
+  STREAMING_ROLE_ID,
 } from '../constants';
 import Rainbow from '../utils/rainbow';
 import RoleUtil from '../utils/role';
 import { logger, timeout } from '../utils/decorators';
+import { GamePlaying } from '../GamePlaying';
 
 export default class ArcaClient extends Client {
   private rainbow = new Rainbow(100);
@@ -41,36 +42,9 @@ export default class ArcaClient extends Client {
   }
 
   private ensureGameRole(member: GuildMember) {
-    const playingGame = RoleUtil.findGameByPlaying(member);
-
-    const isStreaming = member.presence.activities.some(({ type }) => type === 'STREAMING');
-    const hasStreamingRole = member.roles.cache.has(StreamingRoleId);
-
-    if (playingGame) {
-      const gameRoleId = GameRoleIDs[playingGame];
-      const playingRoleId = PlayingRoleIDs[playingGame];
-
-      if (isStreaming && !hasStreamingRole) {
-        member.roles.add(StreamingRoleId);
-      }
-
-      if (gameRoleId && !member.roles.cache.has(gameRoleId)) {
-        member.roles.add(gameRoleId);
-      }
-
-      if (playingRoleId && !member.roles.cache.has(playingRoleId)) {
-        member.roles.add(playingRoleId);
-      }
-    }
-
-    if (!isStreaming && hasStreamingRole) {
-      member.roles.remove(StreamingRoleId);
-    }
-
-    const playingRole = RoleUtil.findGameByPlayingRole(member, playingGame);
-    if (playingRole && !RoleUtil.isPlayingGame(member, playingRole)) {
-      member.roles.remove(PlayingRoleIDs[playingRole]);
-    }
+    GamePlaying.handleGameRole(member);
+    GamePlaying.handleRemoveGameRole(member);
+    GamePlaying.toggleStreamingRole(member);
   }
 
   @timeout(5000)
