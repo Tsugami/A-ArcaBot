@@ -36,5 +36,9 @@
     "execMap": {
       "ts": "ts-node -r dotenv/config"
     }
-  }
+  },
+  "engines": {
+    "yarn": ">=1.22.0",
+    "node": ">=16.12.0"
+  } 
 }
