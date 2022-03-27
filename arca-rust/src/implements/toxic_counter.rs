@@ -21,7 +21,7 @@ impl AddCounterUsecase for AddToxicCounter {
         &self,
         witness_user: &ApiUser,
         user: &ApiUser,
-        result: Result<i32, CounterError>,
+        result: &Result<i32, CounterError>,
     ) -> String {
         match result {
             Ok(count) => format!(

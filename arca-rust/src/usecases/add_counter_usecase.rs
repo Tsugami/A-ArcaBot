@@ -18,7 +18,7 @@ pub trait AddCounterUsecase {
         &self,
         witness_user: &ApiUser,
         user: &ApiUser,
-        result: Result<i32, CounterError>,
+        result: &Result<i32, CounterError>,
     ) -> String;
 
     fn handle(&self, witness_user: &ApiUser, user: &ApiUser) -> Result<i32, CounterError> {
