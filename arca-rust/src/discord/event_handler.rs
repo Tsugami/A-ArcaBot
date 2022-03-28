@@ -5,8 +5,8 @@ use serenity::{
         id::GuildId,
         interactions::{
             application_command::{
-                ApplicationCommandInteractionDataOptionValue, ApplicationCommandOptionType,
-                ApplicationCommandType, ResolvedTarget,
+                ApplicationCommandInteraction, ApplicationCommandInteractionDataOptionValue,
+                ApplicationCommandOptionType, ApplicationCommandType, ResolvedTarget,
             },
             Interaction, InteractionApplicationCommandCallbackDataFlags, InteractionResponseType,
         },
@@ -19,6 +19,36 @@ use crate::{implements::toxic_counter, usecases::add_counter_usecase::AddCounter
 
 pub struct Handler;
 
+// Get the choosen option value from the interaction data.
+fn get_target_user(command: &ApplicationCommandInteraction) -> Option<&User> {
+    match command.data.kind {
+        ApplicationCommandType::ChatInput => {
+            let options = command
+                .data
+                .options
+                .get(0)
+                .expect("Expected user option")
+                .resolved
+                .as_ref()
+                .expect("Expected user object");
+
+            if let ApplicationCommandInteractionDataOptionValue::User(user, _member) = options {
+                Some(&user)
+            } else {
+                None
+            }
+        }
+        ApplicationCommandType::User => {
+            if let Some(ResolvedTarget::User(user, _member)) = &command.data.target {
+                Some(&user)
+            } else {
+                None
+            }
+        }
+        _ => None,
+    }
+}
+
 #[async_trait]
 impl EventHandler for Handler {
     async fn interaction_create(&self, ctx: Context, interaction: Interaction) {
@@ -26,36 +56,7 @@ impl EventHandler for Handler {
             let name = command.data.name.as_str();
 
             if name == "tóxico" {
-                let target_user: Option<&User> = match command.data.kind {
-                    ApplicationCommandType::ChatInput => {
-                        let options = command
-                            .data
-                            .options
-                            .get(0)
-                            .expect("Expected user option")
-                            .resolved
-                            .as_ref()
-                            .expect("Expected user object");
-
-                        if let ApplicationCommandInteractionDataOptionValue::User(user, _member) =
-                            options
-                        {
-                            Some(&user)
-                        } else {
-                            None
-                        }
-                    }
-                    ApplicationCommandType::User => {
-                        if let Some(ResolvedTarget::User(user, _member)) = &command.data.target {
-                            Some(&user)
-                        } else {
-                            None
-                        }
-                    }
-                    _ => None,
-                };
-
-                if let Some(target_user) = target_user {
+                if let Some(target_user) = get_target_user(&command) {
                     let toxic_counter = toxic_counter::AddToxicCounter {};
                     let result = toxic_counter.handle(&command.user, target_user);
                     let content = toxic_counter.message_handle(&command.user, target_user, &result);
