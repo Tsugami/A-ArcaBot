@@ -7,12 +7,12 @@ import { logger, timeout } from './utils/decorators';
 
 import Rainbow from './utils/rainbow';
 import { GamePlaying } from './GamePlaying';
-import { RoleManagar } from './lib/RoleManagar';
+import { RoleManager } from './lib/RoleManager';
 import { normalizeActivity, normalizeUser } from './utils/parsers';
 
 export default class ArcaClient extends Client {
   private rainbow = new Rainbow(100);
-  public roleManager = new RoleManagar(this, config);
+  public roleManager = new RoleManager(this, config);
   public gamePlaying = new GamePlaying(this.roleManager, config);
 
   constructor() {

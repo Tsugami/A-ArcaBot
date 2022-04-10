@@ -2,10 +2,10 @@ import type { Game, APIUser, Config, GatewayActivity } from './types';
 
 import { ActivityType } from './types';
 import { GameConfig } from './config/GameConfig';
-import { RoleManagar } from './lib/RoleManagar';
+import { RoleManager } from './lib/RoleManager';
 
 export class GamePlaying {
-  constructor(public roleManagar: RoleManagar, public config: Config) {}
+  constructor(public roleManager: RoleManager, public config: Config) {}
 
   /**
    * Returns the game that the member is playing, if the game is not found, returns undefined. It only works with games-on config file.
@@ -28,13 +28,13 @@ export class GamePlaying {
    * Add streaming role if user is streaming, if user is not streaming and has the role, remove role
    */
   async toggleStreamingRole(user: APIUser, activities: GatewayActivity[]): Promise<void> {
-    const hasStreamingRole = this.roleManagar.hasRole(user.id, this.config.streamingRoleId);
+    const hasStreamingRole = this.roleManager.hasRole(user.id, this.config.streamingRoleId);
     const isStreaming = GamePlaying.isStreaming(activities);
 
     if (isStreaming && !hasStreamingRole) {
-      await this.roleManagar.addRole(user.id, this.config.streamingRoleId);
+      await this.roleManager.addRole(user.id, this.config.streamingRoleId);
     } else if (!isStreaming && hasStreamingRole) {
-      await this.roleManagar.removeRole(user.id, this.config.streamingRoleId);
+      await this.roleManager.removeRole(user.id, this.config.streamingRoleId);
     }
   }
 
@@ -47,8 +47,8 @@ export class GamePlaying {
     for (const playingRoleID of GameConfig.getPlayingRoleIds()) {
       if (playingRoleID === playingGame?.playingRoleId) continue;
 
-      if (this.roleManagar.hasRole(user.id, playingRoleID)) {
-        await this.roleManagar.removeRole(user.id, playingRoleID);
+      if (this.roleManager.hasRole(user.id, playingRoleID)) {
+        await this.roleManager.removeRole(user.id, playingRoleID);
       }
     }
   }
@@ -62,16 +62,16 @@ export class GamePlaying {
     if (!playingGame) return;
 
     const hasGameRole =
-      !!playingGame?.gameRoleId && this.roleManagar.hasRole(user.id, playingGame?.gameRoleId);
+      !!playingGame?.gameRoleId && this.roleManager.hasRole(user.id, playingGame?.gameRoleId);
 
     if (!!playingGame?.gameRoleId && !hasGameRole) {
-      this.roleManagar.addRole(user.id, playingGame.gameRoleId);
+      this.roleManager.addRole(user.id, playingGame.gameRoleId);
     }
 
-    const hasPlayingRole = this.roleManagar.hasRole(user.id, playingGame.playingRoleId);
+    const hasPlayingRole = this.roleManager.hasRole(user.id, playingGame.playingRoleId);
 
     if (playingGame && !hasPlayingRole) {
-      this.roleManagar.addRole(user.id, playingGame.playingRoleId);
+      this.roleManager.addRole(user.id, playingGame.playingRoleId);
     }
   }
 }

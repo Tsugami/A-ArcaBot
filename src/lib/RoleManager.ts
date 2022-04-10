@@ -2,7 +2,9 @@ import type { Client } from 'discord.js';
 import { logger } from '../utils/logger';
 import type { Config } from '../types';
 
-export class RoleManagar {
+const DISABLED_ROLE_MANAGER = !!process.env.DISABLED_ROLE_MANAGER;
+
+export class RoleManager {
   constructor(public client: Client, public config: Config) {}
 
   private getMember(memberId: string) {
@@ -27,7 +29,7 @@ export class RoleManagar {
       this.getMemberDisplayName(memberId),
     );
 
-    await this.getMember(memberId)?.roles.remove(roleId);
+    if (!DISABLED_ROLE_MANAGER) await this.getMember(memberId)?.roles.remove(roleId);
   }
 
   async addRole(memberId: string, roleId: string): Promise<void> {
@@ -37,7 +39,7 @@ export class RoleManagar {
       this.getMemberDisplayName(memberId),
     );
 
-    await this.getMember(memberId)?.roles.add(roleId);
+    if (!DISABLED_ROLE_MANAGER) await this.getMember(memberId)?.roles.add(roleId);
   }
 
   hasRole(memberId: string, roleId: string): boolean {
