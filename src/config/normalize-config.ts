@@ -3,37 +3,34 @@ import type { Game } from '../types';
 export const normalizeActivityNameOrState = (text: string) =>
   text.replace(/\s+/g, ' ').trim().toLowerCase();
 
+type Value = string;
+type GameId = string;
+
 /**
  * change activity data structure to key value to speed up queries
  */
 export const normalizeGamesConfig = (games: Record<string, Game>) => {
-  const activitiesStates: Record<string, string> = {};
-  const aplicationIds: Record<string, string> = {};
-  const aplicationNames: Record<string, string> = {};
-  const playingRoleIDs: Record<string, string> = {};
+  const gamesAlias = new Map<Value, GameId>();
+  const playingRoleIDs: string[] = [];
 
   for (const gameID in games) {
     const game = games[gameID];
 
-    playingRoleIDs[game.playingRoleId] = gameID;
+    playingRoleIDs.push(game.playingRoleId);
+    gamesAlias.set(game.playingRoleId, gameID);
 
     for (const activity of game.activities) {
-      if (activity.application_id) {
-        aplicationIds[activity.application_id] = gameID;
-      }
-      if (activity.state) {
-        activitiesStates[normalizeActivityNameOrState(activity.state)] = gameID;
-      }
-      if (activity.name) {
-        aplicationNames[normalizeActivityNameOrState(activity.name)] = gameID;
+      for (const value of Object.values(activity)) {
+        if (!value) continue;
+        gamesAlias.set(normalizeActivityNameOrState(value), gameID);
       }
     }
   }
 
   return {
-    activitiesStates,
-    aplicationIds,
-    aplicationNames,
+    getGameIdByProp: (value: Value): GameId | undefined => {
+      return gamesAlias.get(normalizeActivityNameOrState(value));
+    },
     playingRoleIDs,
   };
 };
