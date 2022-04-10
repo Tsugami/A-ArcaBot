@@ -1,10 +1,8 @@
 import type { Game, APIUser, Config, GatewayActivity } from './types';
 
 import { ActivityType } from './types';
-import { logger } from './utils/logger';
 import { GameConfig } from './config/GameConfig';
 import { RoleManagar } from './lib/RoleManagar';
-import { getUserDisplayName } from './utils/discord';
 
 export class GamePlaying {
   constructor(public roleManagar: RoleManagar, public config: Config) {}
@@ -34,10 +32,8 @@ export class GamePlaying {
     const isStreaming = GamePlaying.isStreaming(activities);
 
     if (isStreaming && !hasStreamingRole) {
-      logger.debug('Adding streaming role for %s', getUserDisplayName(user));
       await this.roleManagar.addRole(user.id, this.config.streamingRoleId);
     } else if (!isStreaming && hasStreamingRole) {
-      logger.debug('Removing streaming role for %s', getUserDisplayName(user));
       await this.roleManagar.removeRole(user.id, this.config.streamingRoleId);
     }
   }
@@ -52,7 +48,6 @@ export class GamePlaying {
       if (playingRoleID === playingGame?.playingRoleId) continue;
 
       if (this.roleManagar.hasRole(user.id, playingRoleID)) {
-        logger.debug('Removing %s playing role for %s', playingGame, getUserDisplayName(user));
         await this.roleManagar.removeRole(user.id, playingRoleID);
       }
     }
@@ -70,14 +65,12 @@ export class GamePlaying {
       !!playingGame?.gameRoleId && this.roleManagar.hasRole(user.id, playingGame?.gameRoleId);
 
     if (!!playingGame?.gameRoleId && !hasGameRole) {
-      logger.debug('Adding %s game role for %s', playingGame, getUserDisplayName(user));
       this.roleManagar.addRole(user.id, playingGame.gameRoleId);
     }
 
     const hasPlayingRole = this.roleManagar.hasRole(user.id, playingGame.playingRoleId);
 
     if (playingGame && !hasPlayingRole) {
-      logger.debug('Adding %s playing role for %s', playingGame, getUserDisplayName(user));
       this.roleManagar.addRole(user.id, playingGame.playingRoleId);
     }
   }
