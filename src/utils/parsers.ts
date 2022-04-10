@@ -30,6 +30,7 @@ export const normalizeActivity = (activity: Activity): GatewayActivity => {
     type: normalizeActivityType(activity.type),
     application_id: activity.applicationId ?? undefined,
     state: activity.state,
+    details: activity.details,
   };
 };
 

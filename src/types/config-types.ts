@@ -1,6 +1,9 @@
 import type { GatewayActivity } from 'discord-api-types/v10';
 
-export type GameActivity = Pick<Partial<GatewayActivity>, 'application_id' | 'state' | 'name'>;
+export type GameActivity = Pick<
+  Partial<GatewayActivity>,
+  'application_id' | 'state' | 'name' | 'details'
+>;
 
 export interface Config {
   clientId: string;
