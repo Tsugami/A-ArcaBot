@@ -43,10 +43,7 @@ export const config: Config = {
       gameRoleId: '954189853074006067',
       activities: [
         {
-          state: 'Monster Hunter Generations Ultimate',
-        },
-        {
-          application_id: '568815339807309834',
+          details: 'Playing MONSTER HUNTER GENERATIONS ULTIMATE',
         },
       ],
     },
