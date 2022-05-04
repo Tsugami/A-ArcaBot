@@ -1,4 +1,5 @@
+export * from './command-types';
 export * from './config-types';
 
 export { GuildMember } from 'discord.js';
-export { GatewayActivity, ActivityType, APIGuildMember, APIUser } from 'discord-api-types/v9';
+export * from 'discord-api-types/v9';
